@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from "@chakra-ui/core"
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
       Hello world!
@@ -9,3 +9,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home
