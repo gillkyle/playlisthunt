@@ -17,11 +17,14 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core"
+import { useAuth0 } from "@auth0/auth0-react"
 
 import Logo from "../img/logo.png"
 import ClientOnly from "./client-only"
 
 const Header = () => {
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0()
+
   return (
     <Flex align="center" justify="space-between" p="4">
       <Text
@@ -40,14 +43,14 @@ const Header = () => {
           Top
         </Button>
         <ClientOnly>
-          {false ? (
+          {isAuthenticated ? (
             <Menu>
               <MenuButton as={Button} leftIcon="chevron-down">
                 Profile
               </MenuButton>
               <MenuList placement="bottom-end">
-                <MenuItem isDisabled>{`user?.email`}</MenuItem>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem isDisabled>{user?.email}</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           ) : (
@@ -55,7 +58,7 @@ const Header = () => {
               variant="solid"
               variantColor="blue"
               fontWeight="bold"
-              onClick={() => console.log("Login!")}
+              onClick={loginWithRedirect}
             >
               Sign Up
             </Button>
